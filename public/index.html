@@ -16,11 +16,18 @@
     <link rel="stylesheet" href="https://developer.api.autodesk.com/modelderivative/v2/viewers/7.*/style.min.css"
         type="text/css">
     <script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/7.*/viewer3D.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
+        integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!-- this project files -->
     <link href="css/main.css" rel="stylesheet" />
     <script src="js/ForgeTree.js"></script>
     <script src="js/ForgeViewer.js"></script>
     <script src="js/ForgeFunciones.js"></script>
+    <script src="js/learnAsync.js"></script>
+    <script src="js/forgePropiedades.js"></script>
+    <script src="js/mongoIncidencias.js"></script>
+    <script src="js/extensionPrueba.js"></script>
 </head>
 
 <body>
@@ -48,6 +55,19 @@
                         <input type="checkbox" name="addPintura" id="addPintura" checked="checked">
                         <span class="slider round"></span>
                     </label>
+                    <button type="button" class="btn btn-success" id="btnGuardarSeleccion"
+                        onclick="guardarSeleccion()">Guardar Seleccion</button>
+                    <button type="button" class="btn btn-success" id="btnRecuperarSeleccion"
+                        onclick="recuperarSeleccion()">Recuperar Seleccion</button>
+                    <button type="button" class="btn btn-success" id="btnPintarCategorias"
+                        onclick="pintarCategorias()">Pintar categorias</button>
+                    <select class="form-select" aria-label="Default select example" id="checkPropertiesButton">
+                        <option selected value=0>Seleccione una propiedad</option>
+                        <option value="Keynote">Nota clave</option>
+                        <option value="Description">Descripción</option>
+                        <option value="Location Line">Línea de localización</option>
+                    </select>
+                    <!-- <button type="button" class="btn btn-success" id="btnCheckKeynote" onclick="checkKeynote()">Check KN</button> -->
                 </li>
                 <li>
                     <p id="nObjetos">0 Objetos seleccionados</p>
@@ -61,7 +81,7 @@
         </div>
     </nav>
     <!-- End of navbar -->
-    <div class="container-fluid fill">
+    <div class="container-fluid fill mt-15px">
         <div class="row fill">
             <div class="col-sm-4 fill">
                 <div class="panel panel-default fill">
@@ -76,46 +96,96 @@
                     <div id="appBuckets">
                         tree here
                     </div>
+                    <div class="padding2">
+                        <h3>INFORMACIÓN DE PARÁMETROS</h3>
+                        <div class="displayFlex">
+                            <input type="text" id="searchProp" class="form-control"><button id="btnBuscarPropiedades"
+                                class="btn btn-primary" onclick="getPropValues($('#searchProp').val())">Buscar</button>
+                        </div>
+                        <div>
+                            <ul id="lista" class="list-group"></ul>
+                        </div>
+                    </div>
+                    <div class="padding2">
+                        <h3>CREAR INCIDENCIA</h3>
+                        <form id="formCrearIncidencia">
+                            <div class="form-group">
+                                <label for="titulo">Título</label>
+                                <input type="text" name="titulo" class="form-control" id="formTitle"
+                                    placeholder="Título de la incidencia">
+                            </div>
+                            <div class="form-group">
+                                <label for="user">Usuario</label>
+                                <input type="text" name="usuario" class="form-control" id="formUser"
+                                    placeholder="Usuario">
+                            </div>
+                            <div class="form-group">
+                                <label for="user">Estado</label>
+                                <input type="text" name="estado" class="form-control" id="formStatus"
+                                    placeholder="Estado de la incidencia" value="Open">
+                            </div>
+                            <div class="form-group">
+                                <label for="closedAt">Fecha límite</label>
+                                <input type="date" name="closedAt" class="form-control" id="formClosedAt">
+                            </div>
+                            <button type="submit" class="btn btn-primary" data-action="guardar" id="btnGuardarIncidencia">Guardar incidencia</button>
+                            <button type="submit" style="display: none;" class="btn btn-success" data-action="actualizar" id="btnModificarIncidencia">Actualizar incidencia</button>
+                            <button type="submit" class="btn btn-danger" data-action="cancelar" id="btnCancelarIncidencia">Cancelar</button>
+                        </form>
+                    </div>
                 </div>
             </div>
-            <div class="col-sm-8 fill">
-                <div id="forgeViewer"></div>
+            <div class="col-sm-6 fill">
+                <p>Visor 3D</p>
+                <div id="forgeViewer" class="forge-viewer"></div>
+                <p>Visor 2D</p>
+                <div id="forgeViewer2" class="forge-viewer"></div>
             </div>
-        </div>
-    </div>
-    <form id="uploadFile" method='post' enctype="multipart/form-data">
-        <input id="hiddenUploadField" type="file" name="theFile" style="visibility:hidden" />
-    </form>
-    <!-- Modal Create Bucket -->
-    <div class="modal fade" id="createBucketModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Cancel">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h4 class="modal-title" id="myModalLabel">Create new bucket</h4>
-                </div>
-                <div class="modal-body">
-                    <input type="text" id="newBucketKey" class="form-control"> For demonstration purposes, objects
-                    (files)
-                    are NOT automatically translated. After you upload, right click on
-                    the object and select "Translate". Note: Technically your bucket name is required to be globally
-                    unique across
-                    the entire platform - to keep things simple with this tutorial your client ID will be prepended by
-                    default to
-                    your bucket name and in turn masked by the UI so you only have to make sure your bucket name is
-                    unique within
-                    your current Forge app.
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary" id="createNewBucket">Go ahead, create the
-                        bucket</button>
+            <div class="col-sm-2 fill">
+                <div class="panel panel-default fill">
+                    <div class="panel-heading" data-toggle="tooltip">Incidencias</div>
+                    <div>
+                        <ul id="listaIncidencias" class="list-group"></ul>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
+            <form id="uploadFile" method='post' enctype="multipart/form-data">
+                <input id="hiddenUploadField" type="file" name="theFile" style="visibility:hidden" />
+            </form>
+            <!-- Modal Create Bucket -->
+            <div class="modal fade" id="createBucketModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Cancel">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel">Create new bucket</h4>
+                        </div>
+                        <div class="modal-body">
+                            <input type="text" id="newBucketKey" class="form-control"> For demonstration purposes,
+                            objects
+                            (files)
+                            are NOT automatically translated. After you upload, right click on
+                            the object and select "Translate". Note: Technically your bucket name is required to be
+                            globally
+                            unique across
+                            the entire platform - to keep things simple with this tutorial your client ID will be
+                            prepended by
+                            default to
+                            your bucket name and in turn masked by the UI so you only have to make sure your bucket name
+                            is
+                            unique within
+                            your current Forge app.
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-primary" id="createNewBucket">Go ahead, create the
+                                bucket</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 </body>
 
 </html>

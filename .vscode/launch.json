@@ -12,7 +12,8 @@
             "env": {
                 "FORGE_CLIENT_ID": "fMjlfGPR84UWx63FSmcHm4QDOjAOaWOC",
                 "FORGE_CLIENT_SECRET": "tJkFGdsdtHyAE8rp",
-                "FORGE_CALLBACK_URL": "http://localhost:3000/api/forge/callback/oauth"
+                "FORGE_CALLBACK_URL": "http://localhost:3000/api/forge/callback/oauth",
+                "MONGO_URI" : "mongodb+srv://ericForge:pbbYRCNgf56YkT1m@cluster0.zouwl.mongodb.net/forge?retryWrites=true&w=majority"
             }
         }
     ]

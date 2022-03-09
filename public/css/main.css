@@ -19,11 +19,13 @@ html, body {
   #appBuckets {
     overflow: auto;
     width: 100%;
-    height: calc(100vh - 150px);
+    /* height: calc(100vh - 150px); */
   }
 
-  #forgeViewer {
+  .forge-viewer {
+    position: relative;
     width: 100%;
+    height: calc((100vh - 140px)/2);
   }
 
   .buscadorTexto{
@@ -91,4 +93,43 @@ input:checked + .slider:before {
 
 .slider.round:before {
   border-radius: 50%;
+}
+
+.displayFlex{
+  display: flex;
+}
+
+.padding2{
+  padding: 2%;
+}
+
+.incidencia{
+  color: red;
+  text-align: right;
+}
+
+.incidencia:hover{
+  background-color: rgb(233, 229, 229);
+}
+
+.incidenciaSelected{
+  background-color: rgb(233, 229, 229);
+}
+
+.mt-15px{
+  margin-top: 15px;
+}
+
+.primeraExtensionIcon {
+  background-image: url(/img/extensionIcon.png);
+  background-size: 24px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.segundaExtensionIcon {
+  background-image: url(/img/extension2Icon.png);
+  background-size: 24px;
+  background-repeat: no-repeat;
+  background-position: center;
 }
