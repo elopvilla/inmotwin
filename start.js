@@ -6,7 +6,7 @@ const PORT = process.env.PORT || 3000;
 const config = require('./config');
 if (config.credentials.client_id == null || config.credentials.client_secret == null) {
     console.error('Missing FORGE_CLIENT_ID or FORGE_CLIENT_SECRET env. variables.');
-    return;
+    // return;
 }
 
 //Conexión a la base de datos
@@ -20,6 +20,8 @@ app.use('/api/forge/oss', require('./routes/oss'));
 app.use('/api/forge/modelderivative', require('./routes/modelderivative'));
 app.use('/api/forge/miprimerapi', require('./routes/miprimerapi'));
 app.use('/api/forge/incidencias', require('./routes/incidencias'));
+app.use('/api/forge/utilidades', require('./routes/utilidades'));
+app.use('/api/forge/anotaciones', require('./routes/anotacionesService'));
 app.use((err, req, res, next) => {
     console.error(err);
     res.status(err.statusCode).json(err);

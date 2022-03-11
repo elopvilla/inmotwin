@@ -5,7 +5,8 @@ module.exports = {
         client_id: process.env.FORGE_CLIENT_ID,
         client_secret: process.env.FORGE_CLIENT_SECRET,
         callback_url: process.env.FORGE_CALLBACK_URL,
-        mongo_uri: process.env.MONGO_URI
+        mongo_uri: process.env.MONGO_URI,
+        model_urn: process.env.MODEL_URN
     },
     scopes: {
         // Required scopes for the server-side application

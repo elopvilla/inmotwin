@@ -8,24 +8,23 @@ html, body {
   }
 
   .fill {
-    height: calc(100vh - 100px);
+    height: 100%;
   }
 
   body {
-    padding-top: 60px; /* space for the top nav bar */
-    margin-right: 30px;
+    padding-top: 58px; /* space for the top nav bar */
   }
 
   #appBuckets {
     overflow: auto;
     width: 100%;
-    /* height: calc(100vh - 150px); */
+    height: calc(100vh - 150px);
   }
-
+  
   .forge-viewer {
     position: relative;
     width: 100%;
-    height: calc((100vh - 140px)/2);
+    height: 100%;
   }
 
   .buscadorTexto{
@@ -121,15 +120,160 @@ input:checked + .slider:before {
 }
 
 .primeraExtensionIcon {
-  background-image: url(/img/extensionIcon.png);
+  background-image: url(/img/extensionIOT.png);
   background-size: 24px;
   background-repeat: no-repeat;
   background-position: center;
 }
 
-.segundaExtensionIcon {
-  background-image: url(/img/extension2Icon.png);
+.botonTarea {
+  background-image: url(/img/tarea.png);
   background-size: 24px;
   background-repeat: no-repeat;
   background-position: center;
+}
+
+.botonTarea.active {
+  background-image: url(/img/tareaActive.png);
+}
+
+.padding0{
+  padding: 0;
+}
+
+.lateral{
+  background-color: #4d4b4b;
+}
+
+.row [class*='col-'] {
+  transition: all 0.5s ease-in-out;
+}
+
+.col-xs-0, 
+.col-sm-0,
+.col-md-0,
+.col-lg-0 {
+  flex: 0 0 0;
+  max-width: 0;
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.tituloAnotacionesContainer{
+  display: flex;
+  background-color: #4d4b4b;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.tituloAnotaciones{
+  background-color: #4d4b4b;
+  color: white;
+  border-radius: 10px 10px 0px 0px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.listaAnotaciones{
+  display: block;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background-color: #a1a0a0;
+  border-radius: 0px 0px 10px 10px;
+}
+
+.gestionarAnotaciones{
+  background-color: #c9c9c9;
+}
+
+.elementoAnotacion{
+  position: relative;
+  display: block;
+  padding: 0.5rem 1rem;
+  color: #000000;
+  font-weight: bold;
+  font-size: 14px;
+  text-decoration: none;
+  background-color: #c2aa5c;
+  border: 1px solid rgba(0,0,0,.125);
+  width: 100%;
+}
+
+.elementoAnotacionSeleccionado{
+  background-color: #8f7a36;
+}
+
+.elementoAnotacion:hover{
+  background-color: #8f7a36;
+}
+
+.tagImg{
+  margin-left: 20px;
+}
+
+.plusImg{
+  margin-right: 4px;
+}
+
+.minusImg{
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.botonera{
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 20px;
+}
+
+input[type="text"]:disabled {
+  background: #ece5bb;
+}
+
+textarea:disabled{
+  background: #ece5bb !important;
+}
+
+.form-group{
+  margin-bottom: 10px;
+}
+
+.displayNone{
+  display: none;
+}
+
+textarea {
+  resize: none;
+}
+
+.btnForm {
+  display: inline-block;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  background-color: transparent;
+  border: 1px solid transparent;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  border-radius: 0.25rem;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.btnEditar {
+  color: #fff;
+  background-color: #424443;
+  border-color: #424443;
+}
+
+.btnNuevo{
+  color: #fff;
+  background-color: #2c61b1;
+  border-color: #2c61b1;
 }
