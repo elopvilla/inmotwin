@@ -4,12 +4,14 @@
 <head>
     <title>BEXREAL - DIGITAL TWIN</title>
     <meta charset="utf-8" />
-    <link rel="shortcut icon"
-        href="https://www.bexreal.com/wp-content/uploads/cropped-favicon-bexreal-32x32.png">
+    <link rel="shortcut icon" href="https://www.bexreal.com/wp-content/uploads/cropped-favicon-bexreal-32x32.png">
     <!-- Common packages: jQuery, Bootstrap, jsTree -->
     <!-- <script src="../resources/notify.js"></script> -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jstree/3.3.7/jstree.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -17,17 +19,24 @@
     <!-- Autodesk Forge Viewer files -->
     <link rel="stylesheet" href="https://developer.api.autodesk.com/modelderivative/v2/viewers/7.*/style.min.css"
         type="text/css">
+    <link rel="stylesheet" href="lib/toastr.css">
     <script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/7.*/viewer3D.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
         integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="lib/jquery.modal.min.js"></script>
+    <link rel="stylesheet" href="lib/jquery.modal.min.css" />
     <!-- this project files -->
     <link href="css/main.css" rel="stylesheet" />
     <script src="js/ForgeViewer.js"></script>
-    <script src="js/app.js"></script>
     <script src="js/sprites.js"></script>
     <script src="js/extensiones.js"></script>
-    <script src="js/anotaciones.js"></script>
+    <!-- <script src="js/anotaciones.js"></script> -->
+    <script src="js/mantenimientos.js"></script>
+    <script src="js/gestionViviendas.js"></script>
+    <script src="js/app.js"></script>
+    <script src="lib/toastr.js"></script>
 </head>
 
 <body>
@@ -48,58 +57,91 @@
         <div class="row fill">
             <div id="viewerContainer" class="col-sm-12 fill padding0">
                 <div id="forgeViewer" class="forge-viewer"></div>
-                <!-- <div id="forgeViewer2" class="forge-viewer"></div> -->
             </div>
-            <div class="col-sm-3 fill padding0 panel panelAnotaciones">
+            <div class="col-sm-3 fill padding0 panel panelMantenimientos" style="display: none;">
                 <div class="card fill">
-                    <h3 class="card-header tituloAnotaciones">ANOTACIONES DE OBRA <button type="submit" class="btnForm btnNuevo" data-action="crear"
-                        id="btnNuevaAnotacion" onclick="toCrearAnotacion()"><img src="./img/plusIcon.png" class="plusImg" width="18" height="18">Nueva</button></h3>
-                    <div class="card-body listaAnotaciones"></div>
-                    <div id="gestionAnotacionesContainer" style="display: none;">
-                        <div class="tituloAnotacionesContainer">
-                            <h5 id="cabeceraAnotacion" class="card-header tituloAnotaciones">NUEVA ANOTACIÓN</h5>
-                            <img src="./img/minusIcon.png" class="minusImg" width="24" height="24">
-                        </div>
-                            <div class="card-body gestionarAnotaciones">
-                                <form id="formAnotaciones">
-                                    <div class="form-group">
-                                        <label for="titulo">Título</label>
-                                        <input type="text" name="titulo" class="form-control" id="tituloAnotacion"
-                                            placeholder="Título de la anotación" disabled>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="user">Usuario</label>
-                                        <input type="text" name="usuario" class="form-control" id="usuarioAnotacion"
-                                            placeholder="Usuario" disabled>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="user">Prioridad</label>
-                                        <input type="text" name="estado" class="form-control" id="prioridadAnotacion"
-                                            placeholder="Grado de prioridad" disabled>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="user">Prioridad</label>
-                                        <textarea id="descripcionAnotacion" name="descripcion" rows="4"
-                                            class="form-control" disabled></textarea>
-                                    </div>
-                                    <div class="botonera">
-                                        <button type="submit" class="btnForm btnEditar" data-action="activarEditar"
-                                            id="btnEditarAnotacion">Editar</button>
-                                        <button type="submit" class="btn btn-success" data-action="actualizar"
-                                            style="display: none;" id="btnModificarAnotacion">Actualizar
-                                            anotación</button>
-                                        <button type="submit" style="display: none;" class="btn btn-danger"
-                                            data-action="cancelar" id="btnCancelarAnotacion">Cancelar</button>
-                                        <button type="submit" style="display: none;" class="btnForm btnNuevo"
-                                            data-action="guardar" id="btnGuardarAnotacion">Guardar</button>
-                                    </div>
-                                </form>
+                    <h3 class="card-header tituloMantenimientos">GESTIÓN DE VIVIENDAS</h3>
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home"
+                                type="button" onclick="verPiso(6)" role="tab" aria-controls="home"
+                                aria-selected="true">Primera planta</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile"
+                                type="button" onclick="verPiso(7)" role="tab" aria-controls="profile"
+                                aria-selected="false">Segunda planta</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact"
+                                type="button" onclick="verPiso(8)" role="tab" aria-controls="contact"
+                                aria-selected="false">Tercera planta</button>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                            <h5 class="tituloPlanoPlanta">PLANO DE PLANTA</h5>
+                            <div id="viewer2D" class="viewerPlanos"></div>
+                            <h5 class="tituloPlanoPlanta">ESTANCIAS</h5>
+                            <div class="estanciasContainer">
+                                <table class="table table-sm tablaEstancias">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Nombre</th>
+                                            <th scope="col">Superficie</th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="cuerpoTablaEstancias"></tbody>
+                                </table>
                             </div>
+                            <h5 class="tituloPlanoPlanta">DISTRIBUCION</h5>
+                            <div class="chartsContainer">
+                                <div id="chartSuperficie"></div>
+                                <div id="chartHabitaciones"></div>
+                            </div>
+                        </div>
+                        <!-- <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">Segunda</div> -->
+                        <!-- <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">La tersera</div> -->
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <div id="ex1" class="modalJ visorVR" style="display: none;">
+        <!-- <iframe src="./pruebas/pano.html" height="500" width="600" title="Iframe Example"></iframe> -->
+    </div>
+    <!-- <div id="realizarMantenimientoModal" class="modalJ">
+        <h5 id="tituloModalRealizarMantenimiento" class="cabeceraModalMantenimientos fontBold">REALIZAR MANTENIMIENTO</h5>
+        <form id="formMantenimientos">
+            <div class="form-group">
+                <label for="titulo" class="fontBold">Título</label>
+                <input type="text" name="titulo" class="form-control" id="mantenimientoFormTitulo" disabled>
+            </div>
+            <div class="form-group">
+                <label for="user" class="fontBold">Asignado a</label>
+                <input type="text" name="usuario" class="form-control" id="mantenimientoFormAsignado" disabled>
+            </div>
+            <div class="form-group">
+                <label for="user" class="fontBold">Realizado por</label>
+                <input type="text" name="usuario" class="form-control" id="mantenimientoFormUsuario"
+                    placeholder="Nombre y apellidos">
+            </div>
+            <div class="form-group">
+                <label for="user" class="fontBold">Descripción</label>
+                <textarea id="mantenimientoFormDescripcion" name="descripcion" rows="3" class="form-control"
+                    disabled></textarea>
+            </div>
+            <div class="form-group">
+                <label for="user" class="fontBold">Observaciones</label>
+                <textarea id="mantenimientoFormObservaciones" name="descripcion" rows="4" class="form-control" placeholder="Observaciones del mantenimiento"></textarea>
+            </div>
+            <div class="botonera">
+                <button type="submit" class="btnForm btnNuevo" data-action="guardar" rel="modal:close"
+                    id="btnGuardarAnotacion">Guardar</button>
+            </div>
+        </form>
+    </div> -->
 </body>
 
 </html>

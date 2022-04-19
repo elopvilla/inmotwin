@@ -18,8 +18,6 @@ app.use(express.json({ limit: '50mb' }));
 app.use('/api/forge/oauth', require('./routes/oauth'));
 app.use('/api/forge/oss', require('./routes/oss'));
 app.use('/api/forge/modelderivative', require('./routes/modelderivative'));
-app.use('/api/forge/utilidades', require('./routes/utilidades'));
-app.use('/api/forge/anotaciones', require('./routes/anotacionesService'));
 app.use((err, req, res, next) => {
     console.error(err);
     res.status(err.statusCode).json(err);

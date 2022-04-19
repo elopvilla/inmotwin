@@ -119,6 +119,24 @@ const guardarAnotacion = (objAnotacion) => {
         contentType: 'application/json',
         type: 'POST',
         success: function (res) {
+            toastr.success('Anotación guardada con éxito', '', {
+                tapToDismiss: true,
+                toastClass: 'toast',
+                containerId: 'toast-container',
+                debug: false,
+                showMethod: 'fadeIn', 
+                showDuration: 300,
+                hideMethod: 'fadeOut',
+                hideDuration: 1000,
+                hideEasing: 'swing',
+                extendedTimeOut: 3500,
+                positionClass: 'toast-bottom-left',
+                timeOut: 3000, 
+                titleClass: 'toast-title',
+                messageClass: 'toast-message',
+                target: 'body',
+                newestOnTop: true,
+            });
             $("#gestionAnotacionesContainer").slideToggle(500);
             $(".elementoAnotacion").removeClass('elementoAnotacionSeleccionado');
             $("#btnCancelarAnotacion").hide();
@@ -136,7 +154,7 @@ const guardarAnotacion = (objAnotacion) => {
             console.error(err);
         }
     });
-}
+};
 
 const actualizarAnotacion = (id, objAnotacion) => {
     $.ajax({

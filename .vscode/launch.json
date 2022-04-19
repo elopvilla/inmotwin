@@ -15,6 +15,7 @@
                 "FORGE_CALLBACK_URL": "http://localhost:3000/api/forge/callback/oauth",
                 "MONGO_URI" : "mongodb+srv://ericForge:pbbYRCNgf56YkT1m@cluster0.zouwl.mongodb.net/forge?retryWrites=true&w=majority",
                 "MODEL_URN" : "dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6Zm1qbGZncHI4NHV3eDYzZnNtY2htNHFkb2phb2F3b2MtYnVja2V0ZW1lYS9yYWNiYXNpY3NhbXBsZXByb2plY3QucnZ0"
+                // "MODEL_URN" : "dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6Zm1qbGZncHI4NHV3eDYzZnNtY2htNHFkb2phb2F3b2MtYnVja2V0ZW1lYS9yYWNhZHZhbmNlZHNhbXBsZXByb2plY3QlMjAoMSkucnZ0"
             }
         }
     ]
